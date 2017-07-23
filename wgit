@@ -1,0 +1,26 @@
+# if working tree has changes
+if [[ "$(git status --porcelain)" ]]; then
+    # get current branch before checkout
+    BRANCH="$(git branch | grep \* | sed -e 's/* //g' | sed -e 's/^working\///g')"
+
+    # checkout or if not exists create it
+    (git checkout working/${BRANCH} || git checkout -b working/${BRANCH}) &>/dev/null
+
+    # add all and commit
+    git add -A
+    git commit -m "wgit autosave commit"
+fi
+
+git checkout $1
+
+# if there is a working branch
+if [[ "$(git branch | grep working/$1)" ]]; then
+    # merge working branch into destination
+    git merge --no-commit working/$1
+
+    # move autosave commit changes into working tree
+    git reset HEAD^
+
+    # delete working branch
+    git branch -D working/$1
+fi

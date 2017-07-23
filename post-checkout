@@ -1,0 +1,46 @@
+ISBRANCHCHANGE=$3
+
+# $WORKINGCO eq 1 when checking out working/$OLDBRANCH
+if [[ $WORKINGCO -ne 1 ]] && [ ISBRANCHCHANGE ];
+then
+	if [ -z $NEWBRANCH ];
+	then
+		export NEWBRANCH="$(git branch | grep \* | sed -e 's/* //g' | sed -e 's/^working\///g')"
+	fi
+
+	# if working tree has changes
+	if [[ $CHANGESCO -ne 1 ]] && [[ "$(git status -s)" ]];
+	then
+		export CHANGESCO=1
+		# checkout original branch
+		git checkout - &>/dev/null
+	elif [[ $CHANGESCO -eq 1 ]];
+	then
+		echo "2"
+		# get original branch name
+		OLDBRANCH="$(git branch | grep \* | sed -e 's/* //g' | sed -e 's/^working\///g')"
+
+		# checkout or if not exists create it
+		export WORKINGCO=1
+		(git checkout working/${OLDBRANCH} || git checkout -b working/${OLDBRANCH}) &>/dev/null
+		WORKINGCO=0
+
+		# add all and commit
+		git add -A && git commit -m "wgit autosave commit"
+		CHANGESCO=0
+		git checkout $NEWBRANCH
+	fi
+
+	# if there is a working branch
+	if [[ "$(git branch | grep working/$NEWBRANCH)" ]];
+	then
+		# merge working branch into destination
+		git merge --no-commit working/$NEWBRANCH
+
+		# move autosave commit changes into working tree
+		git reset HEAD^
+
+		# delete working branch
+		git branch -D working/$NEWBRANCH
+	fi
+fi

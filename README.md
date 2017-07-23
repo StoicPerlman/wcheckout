@@ -3,6 +3,7 @@ Used in place of git checkout to easily save your working tree on git checkout.
 
 `wgit` stands for "working git" and is a play on the `wget` command name
 
+This comes in two versions. A script and a post-checkout hook. Either will do the job. The post-checkout hook is a bit messy because you have to recheckout the original branch and control when the hook fires within the hook itself. If you are just tring to understand what this does I suggest looking at the script. For actual use, the post-checkout hook is the way to go because it can fire within a git gui.
 
 ## Overview
 `SRC_BRANCH` = branch before the command was run

@@ -16,7 +16,6 @@ then
 		git checkout - &>/dev/null
 	elif [[ $CHANGESCO -eq 1 ]];
 	then
-		echo "2"
 		# get original branch name
 		OLDBRANCH="$(git branch | grep \* | sed -e 's/* //g' | sed -e 's/^working\///g')"
 

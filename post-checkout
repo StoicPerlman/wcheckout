@@ -1,3 +1,8 @@
+# This will end up giving you conflicts on checkout
+# Use alias or script instead
+# Just playing around with the idea
+# Really I need a pre-checkout hook for this to work
+
 ISBRANCHCHANGE=$3
 
 # $WORKINGCO eq 1 when checking out working/$OLDBRANCH

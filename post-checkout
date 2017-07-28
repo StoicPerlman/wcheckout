@@ -30,7 +30,7 @@ then
 		WORKINGCO=0
 
 		# add all and commit
-		git add -A && git commit -m "wgit autosave commit"
+		git add -A && git commit -m "wcheckout autosave commit"
 		CHANGESCO=0
 		git checkout $NEWBRANCH
 	fi

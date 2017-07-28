@@ -11,7 +11,7 @@ if [[ $BRANCH != $1 ]]; then
 
       # add all and commit
       git add -A
-      git commit -m "wgit autosave commit"
+      git commit -m "wcheckout autosave commit"
   fi
 
   git checkout $1

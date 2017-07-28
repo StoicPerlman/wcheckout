@@ -1,0 +1,2 @@
+[alias]
+	wco = "!wco() {  BRANCH=\"$(git branch | grep \\* | sed -e 's/* //g' | sed -e 's/^working\\///g')\";  if [[ $BRANCH != $1 ]]; then  if [[ \"$(git status -s)\" ]]; then  (git checkout working/${BRANCH} || git checkout -b working/${BRANCH}) &>/dev/null;  git add -A;  git commit -m \"wgit autosave commit\";  fi &&  git checkout $1;  if [[ \"$(git branch | grep working/$1)\" ]]; then  git merge --no-commit working/$1;  git reset HEAD^;  git branch -D working/$1;  fi  fi  }; wco"

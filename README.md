@@ -1,9 +1,8 @@
-# wgit
+# wcheckout
 Used in place of git checkout to easily save your working tree on git checkout.
+This comes in two working versions. A script and an alias.
 
-`wgit` stands for "working git" and is a play on the `wget` command name
-
-This comes in two versions. A script and a post-checkout hook. Either will do the job. The post-checkout hook is a bit messy because you have to recheckout the original branch and control when the hook fires within the hook itself. If you are just tring to understand what this does I suggest looking at the script. The post-checkout hook is the way to go if you need to fire within a git gui. The post-checkout works up to a point. Can sometimes get conflicts (see future below).
+There is also a third version, the post-checkout hook, which works up to a point. Can sometimes get conflicts like a normal checkout can (see future below).
 
 ## Overview
 `SRC_BRANCH` = branch before the command was run
